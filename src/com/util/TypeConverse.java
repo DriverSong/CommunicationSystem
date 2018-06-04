@@ -1,6 +1,8 @@
 package com.util;
 
 public class TypeConverse {
+	public static String[] hex = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
+	
 	//将输入的String转化为Byte[]，用于将字符串的密钥转化为Byte[]数组，此时每个byte[]元素保存的仅仅是0或1(即1bit数据)
 	public static byte[] string2Byte(String inString) {
 		int length;
@@ -50,5 +52,31 @@ public class TypeConverse {
 	//将byte转为long
 	public static long byte2Long(byte inByte) {
 		return inByte < 0 ? inByte & 0x7F + 128 : inByte;
+	}
+	
+	/*
+	 * 将byte数组转化为16进制String
+	 */
+	public static String bytes2HexString(byte[] inputBytes) {
+		int length = inputBytes.length;
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0; i < length; i++) {
+			byte tempByte = inputBytes[i];
+			sb.append(hex[tempByte >>> 4 & 0xf]);
+			sb.append(hex[tempByte & 0xf]);
+		}
+		return sb.toString();
+	}
+	
+	public static byte[] hexString2Bytes(String inputString) {
+		int length = inputString.length();
+		if (length < 1)  return null;
+		byte[] outputBytes = new byte[length/2];
+		for(int i = 0; i < length/2; i++) {
+			int high = Integer.parseInt(inputString.substring(i * 2, i * 2 + 1), 16);
+			int low = Integer.parseInt(inputString.substring(i * 2 + 1, i * 2 + 2), 16);
+			outputBytes[i] = (byte) (high * 16 + low);
+		}
+		return outputBytes;
 	}
 }

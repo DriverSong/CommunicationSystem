@@ -303,6 +303,7 @@ public class MD5 {
 			/*
 			 * 4byte组合为long时需要先将byte转long
 			 * byte是带符号位的，byte转long时需对符号位进行操作
+			 * 低位在前，高位在后
 			 */
 			groupLongs[i] = TypeConverse.byte2Long(inputBytes[prefix + i * 4 + 0]) | 
 					(TypeConverse.byte2Long(inputBytes[prefix + i * 4 + 1]) << 8) |

@@ -4,6 +4,7 @@ import com.MainApp;
 import com.model.Algorithm;
 import com.model.InitialItems;
 import com.util.AlgorithmMain;
+import com.util.KeyGen;
 
 import javafx.beans.DefaultProperty;
 import javafx.fxml.FXML;
@@ -13,29 +14,6 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 public class PrimaryStageController {
-//	@FXML
-//	private ChoiceBox<String> symmetricAlgorithmChoices = new ChoiceBox<>();
-//	@FXML
-//	private ChoiceBox<String> symmetricKeyChoices  = new ChoiceBox<>();
-//	@FXML
-//	private ChoiceBox<String> HashAlgorithmChoices = new ChoiceBox<>();
-//	@FXML
-//	private TextArea keyArea = new TextArea();
-//	@FXML 
-//	private TextArea idRsaArea = new TextArea();
-//	@FXML
-//	private TextArea idRsaPubArea = new TextArea();
-//	@FXML
-//	private TextArea inputArea = new TextArea();
-//	@FXML
-//	private TextArea hashArea = new TextArea();
-//	@FXML
-//	private TextArea outputArea = new TextArea();
-//	@FXML
-//	private PasswordField rsaInput1 = new PasswordField();
-//	@FXML
-//	private PasswordField rsaInput2 = new PasswordField();
-	
 	@FXML
 	private ChoiceBox<String> symmetricAlgorithmChoices;
 	@FXML
@@ -76,14 +54,34 @@ public class PrimaryStageController {
 		symmetricKeyChoices.getSelectionModel().select(0);
 		HashAlgorithmChoices.setItems(initialItems.getHashAlgorithmItems());
 		HashAlgorithmChoices.getSelectionModel().select(0);
+		
+		showKeyArea(symmetricAlgorithmChoices.getSelectionModel().getSelectedItem(), 
+				symmetricKeyChoices.getSelectionModel().getSelectedItem());
+		
 		keyArea.setEditable(false);
 		idRsaArea.setEditable(false);
 		idRsaPubArea.setEditable(false);
 		hashArea.setEditable(false);
 		outputArea.setEditable(false);
 		
+		symmetricAlgorithmChoices.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> showKeyArea(newValue, symmetricKeyChoices.getSelectionModel().getSelectedItem()));
+		symmetricKeyChoices.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldvalue, newValue) -> showKeyArea(symmetricAlgorithmChoices.getSelectionModel().getSelectedItem(), newValue));;
+		
 	}
 	
+	private void showKeyArea(String symmetricAlgorithm, String symmetricKey) {
+//		if(symmetricKey != "Random") {
+//			KeyGen kg = new KeyGen(symmetricKey, symmetricAlgorithm);
+//			keyArea.setText(kg.getKey());
+//		}else {
+//			keyArea.setText("Random");
+//		}
+		KeyGen kg = new KeyGen(symmetricKey, symmetricAlgorithm);
+		keyArea.setText(kg.getKey());
+	}
+
 	@FXML
 	private void handleEncode() {
 		algorithm.setHashAlgorithm(HashAlgorithmChoices.getSelectionModel().getSelectedItem());
@@ -92,10 +90,13 @@ public class PrimaryStageController {
 		algorithm.setInputArea(inputArea.getText());
 //		System.out.println(algorithm.getInputArea());
 		algorithm.setRsaInput(rsaInput1.getText());
+		algorithm.setKeyArea(keyArea.getText());
 		
 		AlgorithmMain algorithmMain = new AlgorithmMain(algorithm);
 		algorithmMain.encode();
 		
+//		System.out.println(algorithm.getKeyArea());
+//		keyArea.setText(algorithm.getKeyArea());
 		idRsaArea.setText(algorithm.getIdRsaArea());
 		idRsaPubArea.setText(algorithm.getIdRsaPubArea());
 		hashArea.setText(algorithm.getHashArea());

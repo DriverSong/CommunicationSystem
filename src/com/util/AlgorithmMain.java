@@ -15,14 +15,14 @@ public class AlgorithmMain {
 	
 	public AlgorithmMain(Algorithm algorithm) {
 		this.algorithm = algorithm;
-		KeyGen keyGen = new KeyGen(algorithm.getSymmetricKey(), algorithm.getSymmetricAlgorithm());
-		this.algorithm.setKeyArea(keyGen.getKey());
+//		KeyGen keyGen = new KeyGen(algorithm.getSymmetricKey(), algorithm.getSymmetricAlgorithm());
+//		this.algorithm.setKeyArea(keyGen.getKey());
 	}
 	
 	public void setAlgorithm(Algorithm algorithm) {
 		this.algorithm = algorithm;
-		KeyGen keyGen = new KeyGen(algorithm.getSymmetricKey(), algorithm.getSymmetricAlgorithm());
-		this.algorithm.setKeyArea(keyGen.getKey());
+//		KeyGen keyGen = new KeyGen(algorithm.getSymmetricKey(), algorithm.getSymmetricAlgorithm());
+//		this.algorithm.setKeyArea(keyGen.getKey());
 	}
 	
 	public void encode() {
