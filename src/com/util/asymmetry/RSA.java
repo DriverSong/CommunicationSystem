@@ -74,15 +74,15 @@ public class RSA {
 	
 	public void encode() {
 		try {
-//			KeySpec kp = new X509EncodedKeySpec(TypeConverse.hexString2Bytes(idRsaPub));
-//			KeyFactory kf = KeyFactory.getInstance("RSA");
-//			PublicKey pub = kf.generatePublic(kp);
-			Key pub = rsaMap.get("pub");
+			KeySpec kp = new X509EncodedKeySpec(TypeConverse.hexString2Bytes(idRsaPub));
+			KeyFactory kf = KeyFactory.getInstance("RSA");
+			PublicKey pub = kf.generatePublic(kp);
+//			Key pub = rsaMap.get("pub");
 			Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 			cipher.init(Cipher.ENCRYPT_MODE, pub);
 			byte[] inputBytes = input.getBytes();
 			byte[] outputBytes = cipher.doFinal(inputBytes);
-			System.out.println(Arrays.toString(outputBytes));
+//			System.out.println(Arrays.toString(outputBytes));
 			output = TypeConverse.bytes2HexString(outputBytes);
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -91,14 +91,14 @@ public class RSA {
 
 	public void decode() {
 		try {
-//			KeySpec kp = new PKCS8EncodedKeySpec(TypeConverse.hexString2Bytes(idRsa));
-//			KeyFactory kf = KeyFactory.getInstance("RSA");
-//			PrivateKey pri = kf.generatePrivate(kp);
-			Key pri = rsaMap.get("pri");
+			KeySpec kp = new PKCS8EncodedKeySpec(TypeConverse.hexString2Bytes(idRsa));
+			KeyFactory kf = KeyFactory.getInstance("RSA");
+			PrivateKey pri = kf.generatePrivate(kp);
+//			Key pri = rsaMap.get("pri");
 			Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 			cipher.init(Cipher.DECRYPT_MODE, pri);
 			byte[] inputBytes = TypeConverse.hexString2Bytes(input);
-			System.out.println(Arrays.toString(inputBytes));
+//			System.out.println(Arrays.toString(inputBytes));
 			byte[] outputBytes = cipher.doFinal(inputBytes);
 			output = new String(outputBytes);
 		}catch(Exception e) {

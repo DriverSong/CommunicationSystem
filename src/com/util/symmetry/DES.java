@@ -2,6 +2,9 @@ package com.util.symmetry;
 
 import java.io.UnsupportedEncodingException;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
 import com.model.Algorithm;
 import com.util.TypeConverse;
 
@@ -20,26 +23,53 @@ public class DES {
 		this.key = algorithm.getKeyArea();
 	}
 	
+	public DES(String input, String key) {
+		this.input = input;
+		this.key = key;
+	}
+	
 	public void setAlgorithm(Algorithm algorithm) {
 		this.input = algorithm.getInputArea() + algorithm.getRsaArea();
 		this.key = algorithm.getKeyArea();
 	}
+	
+	/*
+	 * TODO: encode
+	 * param: algorithm.inputArea, algorithm.keyArea
+	 * return: algorithm.outputArea
+	 */
 	public void encode() {
-		/*
-		 * TODO: encode
-		 * param: algorithm.inputArea, algorithm.keyArea
-		 * return: algorithm.outputArea
-		 */
-		this.output = "encode" + this.input + this.key;
+		try {
+			byte[] inputBytes = input.getBytes();
+			byte[] keyBytes = TypeConverse.hexString2Bytes(key);
+			SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "DES");
+			Cipher cipher = Cipher.getInstance("DES");
+			cipher.init(Cipher.ENCRYPT_MODE, keySpec);
+			byte[] outputBytes = cipher.doFinal(inputBytes);
+			output = TypeConverse.bytes2HexString(outputBytes);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
+	/*
+	 * TODO: decode
+	 * param: algorithm.inputArea, algorithm.keyArea
+	 * return: algorithm.outputArea
+	 */	
 	public void decode() {
-		/*
-		 * TODO: decode
-		 * param: algorithm.inputArea, algorithm.keyArea
-		 * return: algorithm.outputArea
-		 */
-		this.output = "decode" + this.input + this.key;
+		try {
+			byte[] inputBytes = TypeConverse.hexString2Bytes(input);
+			byte[] keyBytes = TypeConverse.hexString2Bytes(key);
+			SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "DES");
+			Cipher cipher = Cipher.getInstance("DES");
+			cipher.init(Cipher.DECRYPT_MODE, keySpec);
+			byte[] outputBytes = cipher.doFinal(inputBytes);
+			output = new String(outputBytes);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String getInput() {
