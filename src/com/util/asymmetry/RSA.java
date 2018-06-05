@@ -1,12 +1,15 @@
 package com.util.asymmetry;
 
+import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -15,8 +18,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
 
 import com.model.Algorithm;
 import com.util.TypeConverse;
@@ -31,11 +37,6 @@ public class RSA {
 	private static int KEYSIZE = 1024;
 	
 	public RSA() {
-	}
-	
-	public RSA(Algorithm algorithm) {
-		this.input = algorithm.getHashArea();
-		this.seed = algorithm.getRsaInput();
 	}
 	
 	public RSA(String input, String seed) {
@@ -89,20 +90,37 @@ public class RSA {
 		}
 	}
 
-	public void decode() {
+	public void decode() throws NumberFormatException, IllegalBlockSizeException{
 		try {
 			KeySpec kp = new PKCS8EncodedKeySpec(TypeConverse.hexString2Bytes(idRsa));
-			KeyFactory kf = KeyFactory.getInstance("RSA");
-			PrivateKey pri = kf.generatePrivate(kp);
+			KeyFactory kf;
+			kf = KeyFactory.getInstance("RSA"); 
+			PrivateKey pri;
+			pri = kf.generatePrivate(kp);
 //			Key pri = rsaMap.get("pri");
-			Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+			Cipher cipher;
+			cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 			cipher.init(Cipher.DECRYPT_MODE, pri);
 			byte[] inputBytes = TypeConverse.hexString2Bytes(input);
 //			System.out.println(Arrays.toString(inputBytes));
-			byte[] outputBytes = cipher.doFinal(inputBytes);
+			byte[] outputBytes;
+			outputBytes = cipher.doFinal(inputBytes);
 			output = new String(outputBytes);
-		}catch(Exception e) {
-			e.printStackTrace();
+		}catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}catch (InvalidKeySpecException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}catch (NoSuchPaddingException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}catch (InvalidKeyException e4) {
+			// TODO Auto-generated catch block
+			e4.printStackTrace();
+		} catch (BadPaddingException e6) {
+			// TODO Auto-generated catch block
+			e6.printStackTrace();
 		}
 	}
 	

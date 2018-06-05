@@ -68,7 +68,7 @@ public class TypeConverse {
 		return sb.toString();
 	}
 	
-	public static byte[] hexString2Bytes(String inputString) {
+	public static byte[] hexString2Bytes(String inputString) throws  NumberFormatException{
 		int length = inputString.length();
 		if (length < 1)  return null;
 		byte[] outputBytes = new byte[length/2];

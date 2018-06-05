@@ -1,8 +1,13 @@
 package com.util.symmetry;
 
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.model.Algorithm;
@@ -17,11 +22,6 @@ public class DES {
 //		this.input = TypeConverse.byte2Bit(input.getBytes("UTF-8"));
 //		this.key = TypeConverse.string2Byte(key);
 //	}
-
-	public DES(Algorithm algorithm) {
-		this.input = algorithm.getInputArea() + algorithm.getRsaArea();
-		this.key = algorithm.getKeyArea();
-	}
 	
 	public DES(String input, String key) {
 		this.input = input;
@@ -58,7 +58,8 @@ public class DES {
 	 * param: algorithm.inputArea, algorithm.keyArea
 	 * return: algorithm.outputArea
 	 */	
-	public void decode() {
+	public void decode() 
+			throws  NumberFormatException, IllegalBlockSizeException {
 		try {
 			byte[] inputBytes = TypeConverse.hexString2Bytes(input);
 			byte[] keyBytes = TypeConverse.hexString2Bytes(key);
@@ -67,9 +68,20 @@ public class DES {
 			cipher.init(Cipher.DECRYPT_MODE, keySpec);
 			byte[] outputBytes = cipher.doFinal(inputBytes);
 			output = new String(outputBytes);
-		}catch(Exception e) {
+		}catch (NoSuchAlgorithmException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}catch (NoSuchPaddingException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}catch (InvalidKeyException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}catch (BadPaddingException e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
+		
 	}
 
 	public String getInput() {

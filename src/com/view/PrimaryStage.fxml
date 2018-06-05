@@ -28,7 +28,7 @@
       <HBox layoutX="420.0" layoutY="512.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="50.0">
          <children>
             <Button layoutX="420.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleEncode" text="Encode" />
-            <Button layoutX="549.0" layoutY="512.0" mnemonicParsing="false" text="Decode" />
+            <Button layoutX="549.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleDecode" text="Decode" />
             <Button layoutX="701.0" layoutY="512.0" mnemonicParsing="false" text="Close" />
          </children>
       </HBox>

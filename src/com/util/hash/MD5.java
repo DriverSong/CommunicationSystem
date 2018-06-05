@@ -5,6 +5,9 @@ import java.io.UnsupportedEncodingException;
 import com.model.Algorithm;
 import com.util.TypeConverse;
 
+/*
+ * 任意bit转化为128bit
+ */
 public class MD5 {
 	private String input;
 	private String output;
@@ -39,12 +42,9 @@ public class MD5 {
     static final int S43 = 15;
     static final int S44 = 21;
 	
-	public MD5(Algorithm algorithm) {
+	public MD5(String input) {
 		magicNum = new long[]{A, B, C, D};
-		this.input = algorithm.getInputArea();
-	}
-	
-	public MD5() {
+		this.input = input;
 	}
 	
 	public void setAlgorithm (Algorithm algorithm) {

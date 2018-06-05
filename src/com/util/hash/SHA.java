@@ -6,16 +6,17 @@ import java.security.NoSuchAlgorithmException;
 import com.model.Algorithm;
 import com.util.TypeConverse;
 
+/*
+ * SHA-1： 任意bit转化为160bit
+ */
 public class SHA {
 	private String input;
 	private String output;
 	private static final String HashAlgorithm = "SHA-1";
 	
-	public SHA() {
-	}
 	
-	public SHA(Algorithm algorithm) {
-		this.input = algorithm.getInputArea();
+	public SHA(String input) {
+		this.input = input;
 	}
 	
 	public void setAlgorithm(Algorithm algorithm) {

@@ -1,6 +1,7 @@
 package com.util.symmetry;
 
 import java.io.UnsupportedEncodingException;
+import javax.crypto.IllegalBlockSizeException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -19,11 +20,6 @@ public class AES {
 	private String input;
 	private String output;
 	private String key;
-	
-	public AES(Algorithm algorithm) {
-		this.input = algorithm.getInputArea() + algorithm.getRsaArea();
-		this.key = algorithm.getKeyArea();
-	}
 	
 	public AES(String input, String key) {
 		this.input = input;
@@ -51,9 +47,9 @@ public class AES {
 			cipher = Cipher.getInstance("AES");
 			cipher.init(Cipher.ENCRYPT_MODE, keySpec);
 			outputBytes = cipher.doFinal(inputBytes);
-			System.out.println(Arrays.toString(outputBytes));
+//			System.out.println(Arrays.toString(outputBytes));
 			output = TypeConverse.bytes2HexString(outputBytes);
-			System.out.println(output);
+//			System.out.println(output);
 		} catch (IllegalBlockSizeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -79,7 +75,7 @@ public class AES {
 	 * param: algorithm.inputArea, algorithm.keyArea
 	 * return: algorithm.outputArea
 	 */
-	public void decode() {
+	public void decode() throws IllegalBlockSizeException, NumberFormatException {
 		try {
 			byte[] inputBytes;
 			inputBytes = TypeConverse.hexString2Bytes(input);
@@ -92,21 +88,18 @@ public class AES {
 			cipher.init(Cipher.DECRYPT_MODE, keySpec);
 			outputBytes = cipher.doFinal(inputBytes);
 			output = new String(outputBytes);
-		} catch (IllegalBlockSizeException e) {
+		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (BadPaddingException e) {
+		} catch (NoSuchPaddingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}catch (NoSuchAlgorithmException e2) {
+		}catch (InvalidKeyException e) {
 			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} catch (NoSuchPaddingException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}catch (InvalidKeyException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
+		}catch (BadPaddingException e) {
+			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 	public String getInput() {

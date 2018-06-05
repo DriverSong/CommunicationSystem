@@ -84,12 +84,17 @@ public class PrimaryStageController {
 
 	@FXML
 	private void handleEncode() {
+		//选择hash算法
 		algorithm.setHashAlgorithm(HashAlgorithmChoices.getSelectionModel().getSelectedItem());
+		//选择对称加密算法
 		algorithm.setSymmetricAlgorithm(symmetricAlgorithmChoices.getSelectionModel().getSelectedItem());
+		//选择密钥序号
 		algorithm.setSymmetricKey(symmetricKeyChoices.getSelectionModel().getSelectedItem());
+		//手动输入
 		algorithm.setInputArea(inputArea.getText());
-//		System.out.println(algorithm.getInputArea());
+		//输入rsa Seed
 		algorithm.setRsaInput(rsaInput1.getText());
+		//输入密钥
 		algorithm.setKeyArea(keyArea.getText());
 		
 		AlgorithmMain algorithmMain = new AlgorithmMain(algorithm);
@@ -101,7 +106,30 @@ public class PrimaryStageController {
 		idRsaPubArea.setText(algorithm.getIdRsaPubArea());
 		hashArea.setText(algorithm.getHashArea());
 		outputArea.setText(algorithm.getOutputArea());
+	}
+	
+	@FXML
+	private void handleDecode() {
+		//选择hash算法
+		algorithm.setHashAlgorithm(HashAlgorithmChoices.getSelectionModel().getSelectedItem());
+		//选择对称加密算法
+		algorithm.setSymmetricAlgorithm(symmetricAlgorithmChoices.getSelectionModel().getSelectedItem());
+		//选择密钥序号
+		algorithm.setSymmetricKey(symmetricKeyChoices.getSelectionModel().getSelectedItem());
+		//手动输入
+		algorithm.setInputArea(inputArea.getText());
+		//输入rsa Seed
+		algorithm.setRsaInput(rsaInput1.getText());
+		//输入密钥
+		algorithm.setKeyArea(keyArea.getText());
+	
+		AlgorithmMain algorithmMain = new AlgorithmMain(algorithm);
+		algorithmMain.decode();
 		
+		idRsaArea.setText(algorithm.getIdRsaArea());
+		idRsaPubArea.setText(algorithm.getIdRsaPubArea());
+		hashArea.setText(algorithm.getHashArea());
+		outputArea.setText(algorithm.getOutputArea());
 	}
 
 	public void setMain(MainApp mainApp) {
