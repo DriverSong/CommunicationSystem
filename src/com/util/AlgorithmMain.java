@@ -47,6 +47,7 @@ public class AlgorithmMain {
 		algorithm.setIdRsaArea(rsa.getIdRsa());
 		algorithm.setIdRsaPubArea(rsa.getIdRsaPub());
 		algorithm.setRsaArea(rsa.getOutput());
+//		System.out.println(rsa.getOutput());
 		
 		//symmetricAlgorithm
 		if(algorithm.getSymmetricAlgorithm() == "DES") {
@@ -80,7 +81,7 @@ public class AlgorithmMain {
 				aes.decode();
 				//得到 明文 + 1024bit(256hex)MAC码
 				String output = aes.getOutput();
-				System.out.println(output);
+//				System.out.println(output);
 				//MAC码，长度等于RSA密钥长度，= 1024bit = 256hex
 //				System.out.println(output.length());
 				algorithm.setRsaArea(output.substring(output.length() - 256, output.length()));
@@ -93,7 +94,7 @@ public class AlgorithmMain {
 			if(algorithm.getHashAlgorithm() == "MD5") {
 				MD5 md5 = new MD5(algorithm.getOutputArea());
 				md5.generate();
-				System.out.println(md5.getOutput());
+//				System.out.println(md5.getOutput());
 				algorithm.setHashArea(md5.getOutput());
 			}else {
 				SHA sha = new SHA(algorithm.getOutputArea());
@@ -108,18 +109,18 @@ public class AlgorithmMain {
 			algorithm.setIdRsaArea(rsa.getIdRsa());
 			algorithm.setIdRsaPubArea(rsa.getIdRsaPub());
 			String rsaResult = rsa.getOutput();
-			System.out.println(rsaResult);
+//			System.out.println(rsaResult);
 			if(rsaResult.equals(algorithm.getHashArea())) {
-				algorithm.setOutputArea("Success Receive!/r/nPlaintext:/r/n"  + algorithm.getOutputArea());
+				algorithm.setOutputArea("Success Receive!\r\nPlaintext:\r\n"  + algorithm.getOutputArea());
 			}else {
-				algorithm.setOutputArea("Fail to receive correct plaintext!/r/nThe wrong receiving message:/r/n" + algorithm.getOutputArea());
+				algorithm.setOutputArea("Fail to receive correct plaintext!\r\nTry again!");
 			}
 		}catch (IllegalBlockSizeException e) {
 			// TODO: handle exception
-			algorithm.setOutputArea("Fail to receive correct plaintext!/r/nThe wrong receiving message:/r/n" + algorithm.getOutputArea());
+			algorithm.setOutputArea("Fail to receive correct plaintext!\r\nTry again!");
 		}catch (NumberFormatException e) {
 			// TODO: handle exception
-			algorithm.setOutputArea("Fail to receive correct plaintext!/r/nThe wrong receiving message:/r/n" + algorithm.getOutputArea());
+			algorithm.setOutputArea("Fail to receive correct plaintext!\r\nTry again!");
 		}
 	}
 }

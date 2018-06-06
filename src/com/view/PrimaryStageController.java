@@ -10,7 +10,10 @@ import javafx.beans.DefaultProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class PrimaryStageController {
@@ -35,7 +38,9 @@ public class PrimaryStageController {
 	@FXML
 	private PasswordField rsaInput1;
 	@FXML
-	private PasswordField rsaInput2;
+	private TextField rsaText1;
+	@FXML 
+	private RadioButton isVisible;
 	
 	private MainApp main;
 	
@@ -54,6 +59,9 @@ public class PrimaryStageController {
 		symmetricKeyChoices.getSelectionModel().select(0);
 		HashAlgorithmChoices.setItems(initialItems.getHashAlgorithmItems());
 		HashAlgorithmChoices.getSelectionModel().select(0);
+		isVisible.setSelected(false);
+		rsaInput1.setVisible(true);
+		rsaText1.setVisible(false);
 		
 		showKeyArea(symmetricAlgorithmChoices.getSelectionModel().getSelectedItem(), 
 				symmetricKeyChoices.getSelectionModel().getSelectedItem());
@@ -64,13 +72,35 @@ public class PrimaryStageController {
 		hashArea.setEditable(false);
 		outputArea.setEditable(false);
 		
+		keyArea.setWrapText(true);
+		idRsaArea.setWrapText(true);
+		idRsaPubArea.setWrapText(true);
+		inputArea.setWrapText(true);
+		hashArea.setWrapText(true);
+		outputArea.setWrapText(true);
+		
 		symmetricAlgorithmChoices.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> showKeyArea(newValue, symmetricKeyChoices.getSelectionModel().getSelectedItem()));
 		symmetricKeyChoices.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldvalue, newValue) -> showKeyArea(symmetricAlgorithmChoices.getSelectionModel().getSelectedItem(), newValue));;
-		
+		isVisible.selectedProperty().addListener(
+				(observable, oldValue, newValue) -> isTextFieldVisible(newValue));
+		rsaInput1.textProperty().addListener(
+				(observable, oldValue, newValue) -> rsaText1.setText(newValue));
+		rsaText1.textProperty().addListener(
+				(observable, oldValue, newValue) -> rsaInput1.setText(newValue));
 	}
 	
+	private void isTextFieldVisible(Boolean newValue) {
+		if(newValue == false) {
+			rsaInput1.setVisible(true);
+			rsaText1.setVisible(false);
+		}else {
+			rsaInput1.setVisible(false);
+			rsaText1.setVisible(true);
+		}
+	}
+
 	private void showKeyArea(String symmetricAlgorithm, String symmetricKey) {
 //		if(symmetricKey != "Random") {
 //			KeyGen kg = new KeyGen(symmetricKey, symmetricAlgorithm);
@@ -96,6 +126,9 @@ public class PrimaryStageController {
 		algorithm.setRsaInput(rsaInput1.getText());
 		//输入密钥
 		algorithm.setKeyArea(keyArea.getText());
+		//初始化输出框
+		algorithm.setOutputArea("");
+		
 		
 		AlgorithmMain algorithmMain = new AlgorithmMain(algorithm);
 		algorithmMain.encode();
@@ -122,6 +155,8 @@ public class PrimaryStageController {
 		algorithm.setRsaInput(rsaInput1.getText());
 		//输入密钥
 		algorithm.setKeyArea(keyArea.getText());
+		//初始化输出框
+		algorithm.setOutputArea("");
 	
 		AlgorithmMain algorithmMain = new AlgorithmMain(algorithm);
 		algorithmMain.decode();

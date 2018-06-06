@@ -73,15 +73,18 @@ public class RSA {
 		}
 	}
 	
+	//签名
 	public void encode() {
 		try {
-			KeySpec kp = new X509EncodedKeySpec(TypeConverse.hexString2Bytes(idRsaPub));
+			//PKCS8EncodedKeySpec
+			KeySpec kp = new PKCS8EncodedKeySpec(TypeConverse.hexString2Bytes(idRsa));
 			KeyFactory kf = KeyFactory.getInstance("RSA");
-			PublicKey pub = kf.generatePublic(kp);
+			PrivateKey pri = kf.generatePrivate(kp);
 //			Key pub = rsaMap.get("pub");
 			Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-			cipher.init(Cipher.ENCRYPT_MODE, pub);
+			cipher.init(Cipher.ENCRYPT_MODE, pri);
 			byte[] inputBytes = input.getBytes();
+//			System.out.println(Arrays.toString(inputBytes));
 			byte[] outputBytes = cipher.doFinal(inputBytes);
 //			System.out.println(Arrays.toString(outputBytes));
 			output = TypeConverse.bytes2HexString(outputBytes);
@@ -90,17 +93,19 @@ public class RSA {
 		}
 	}
 
+	//验证身份
 	public void decode() throws NumberFormatException, IllegalBlockSizeException{
 		try {
-			KeySpec kp = new PKCS8EncodedKeySpec(TypeConverse.hexString2Bytes(idRsa));
+			//X509EncodedKeySpec
+			KeySpec kp = new X509EncodedKeySpec(TypeConverse.hexString2Bytes(idRsaPub));
 			KeyFactory kf;
 			kf = KeyFactory.getInstance("RSA"); 
-			PrivateKey pri;
-			pri = kf.generatePrivate(kp);
+			PublicKey pub;
+			pub = kf.generatePublic(kp);
 //			Key pri = rsaMap.get("pri");
 			Cipher cipher;
 			cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-			cipher.init(Cipher.DECRYPT_MODE, pri);
+			cipher.init(Cipher.DECRYPT_MODE, pub);
 			byte[] inputBytes = TypeConverse.hexString2Bytes(input);
 //			System.out.println(Arrays.toString(inputBytes));
 			byte[] outputBytes;
