@@ -1,5 +1,6 @@
 package com.util;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 
 import com.model.Algorithm;
@@ -82,6 +83,7 @@ public class AlgorithmMain {
 				//得到 明文 + 1024bit(256hex)MAC码
 				String output = aes.getOutput();
 //				System.out.println(output);
+//				System.out.println(output);
 				//MAC码，长度等于RSA密钥长度，= 1024bit = 256hex
 //				System.out.println(output.length());
 				algorithm.setRsaArea(output.substring(output.length() - 256, output.length()));
@@ -120,6 +122,8 @@ public class AlgorithmMain {
 			algorithm.setOutputArea("Fail to receive correct plaintext!\r\nTry again!");
 		}catch (NumberFormatException e) {
 			// TODO: handle exception
+			algorithm.setOutputArea("Fail to receive correct plaintext!\r\nTry again!");
+		}catch (BadPaddingException e) {
 			algorithm.setOutputArea("Fail to receive correct plaintext!\r\nTry again!");
 		}
 	}

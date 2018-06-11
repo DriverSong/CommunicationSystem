@@ -59,7 +59,7 @@ public class DES {
 	 * return: algorithm.outputArea
 	 */	
 	public void decode() 
-			throws  NumberFormatException, IllegalBlockSizeException {
+			throws  NumberFormatException, IllegalBlockSizeException, BadPaddingException {
 		try {
 			byte[] inputBytes = TypeConverse.hexString2Bytes(input);
 			byte[] keyBytes = TypeConverse.hexString2Bytes(key);
@@ -75,9 +75,6 @@ public class DES {
 			// TODO: handle exception
 			e.printStackTrace();
 		}catch (InvalidKeyException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}catch (BadPaddingException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}

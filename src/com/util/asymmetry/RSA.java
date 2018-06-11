@@ -94,7 +94,7 @@ public class RSA {
 	}
 
 	//验证身份
-	public void decode() throws NumberFormatException, IllegalBlockSizeException{
+	public void decode() throws NumberFormatException, IllegalBlockSizeException, BadPaddingException{
 		try {
 			//X509EncodedKeySpec
 			KeySpec kp = new X509EncodedKeySpec(TypeConverse.hexString2Bytes(idRsaPub));
@@ -123,9 +123,6 @@ public class RSA {
 		}catch (InvalidKeyException e4) {
 			// TODO Auto-generated catch block
 			e4.printStackTrace();
-		} catch (BadPaddingException e6) {
-			// TODO Auto-generated catch block
-			e6.printStackTrace();
 		}
 	}
 	

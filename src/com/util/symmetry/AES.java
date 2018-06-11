@@ -75,7 +75,7 @@ public class AES {
 	 * param: algorithm.inputArea, algorithm.keyArea
 	 * return: algorithm.outputArea
 	 */
-	public void decode() throws IllegalBlockSizeException, NumberFormatException {
+	public void decode() throws IllegalBlockSizeException, NumberFormatException, BadPaddingException {
 		try {
 			byte[] inputBytes;
 			inputBytes = TypeConverse.hexString2Bytes(input);
@@ -96,9 +96,6 @@ public class AES {
 			e.printStackTrace();
 		}catch (InvalidKeyException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch (BadPaddingException e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
