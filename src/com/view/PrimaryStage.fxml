@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="550.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.PrimaryStageController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.view.PrimaryStageController">
    <children>
       <TextArea fx:id="keyArea" layoutX="47.0" layoutY="135.0" prefHeight="75.0" prefWidth="261.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="130.0" />
       <Label layoutX="45.0" layoutY="113.0" text="Symmetric Key" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="100.0" />
@@ -28,7 +28,6 @@
          <children>
             <Button layoutX="420.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleEncode" text="Encode" />
             <Button layoutX="549.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleDecode" text="Decode" />
-            <Button layoutX="701.0" layoutY="512.0" mnemonicParsing="false" text="Close" />
          </children>
       </HBox>
       <Label layoutX="400.0" layoutY="230.0" text="Hash" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="230.0" />
